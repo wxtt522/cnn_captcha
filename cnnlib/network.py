@@ -1,8 +1,5 @@
-import tensorflow as tf
 import numpy as np
-import os
-from PIL import Image
-import random
+import tensorflow as tf
 
 
 class CNN(object):
@@ -59,10 +56,15 @@ class CNN(object):
         print(">>> input x: {}".format(x))
 
         # 卷积层1
+        # 构建第一个卷积核
         wc1 = tf.get_variable(name='wc1', shape=[3, 3, 1, 32], dtype=tf.float32,
                               initializer=tf.contrib.layers.xavier_initializer())
+        # 初始化卷积核偏置量，这里偏量0.1*随机值
         bc1 = tf.Variable(self.b_alpha * tf.random_normal([32]))
-        conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(x, wc1, strides=[1, 1, 1, 1], padding='SAME'), bc1))
+        # tf.nn.conv2d(x, wc1, strides=[1, 1, 1, 1], padding='SAME'
+        # w为卷积核；strides是卷积时图像每一维的步长（水平步长为1，垂直步长为1），padding为卷积方式
+        conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(x, wc1, strides=[1, 1, 1, 1], padding='SAME'), bc1)) # 输入填充、步长为1
+        # 构建池化层，shape为[batch，height，width， channels]设为1个池化，池化矩阵的大小为2*2,有1个通道。
         conv1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
         conv1 = tf.nn.dropout(conv1, self.keep_prob)
 

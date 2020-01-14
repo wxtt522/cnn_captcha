@@ -2,7 +2,7 @@
 use CNN recognize captcha by tensorflow.  
 本项目针对字符型图片验证码，使用tensorflow实现卷积神经网络，进行验证码识别。  
 项目封装了比较通用的**校验、训练、验证、识别、API模块**，极大的减少了识别字符型验证码花费的时间和精力。 
-  
+
 项目已经帮助很多同学高效完成了验证码识别任务。
 如果你在使用过程中出现了bug和做了良好的改进，欢迎提出issue和PR，作者会尽快回复，希望能和你共同完善项目。 
 
@@ -103,9 +103,9 @@ use CNN recognize captcha by tensorflow.
 | Java | SimpleCaptcha | [例子](https://www.oschina.net/p/simplecaptcha)   | ![效果1](./readme_image/SimpleCaptcha_1.jpg) ![效果2](./readme_image/SimpleCaptcha_2.jpg) ![效果3](./readme_image/SimpleCaptcha_3.jpg) |
 | Java | kaptcha | [例子](https://github.com/linghushaoxia/kaptcha) | ![水纹效果](./readme_image/Kaptcha_5.png) ![鱼眼效果](./readme_image/Kaptcha_2.png) ![阴影效果](./readme_image/Kaptcha_3.png) |
 | Java | patchca |  | ![效果1](./readme_image/patchca_1.png) |
-| Java | imageRandom |  |  |  
-| Java | iCaptcha |  | ![效果1](./readme_image/iCaptcha.jpg) |  
-| Java | SkewPassImage |  | ![效果1](./readme_image/SkewPassImage.jpg) |  
+| Java | imageRandom |  |  |
+| Java | iCaptcha |  | ![效果1](./readme_image/iCaptcha.jpg) |
+| Java | SkewPassImage |  | ![效果1](./readme_image/SkewPassImage.jpg) |
 | Java | Cage |  | ![效果1](./readme_image/Cage1.jpg) ![效果2](./readme_image/Cage2.jpg) |
 | Python | captcha | [例子](https://github.com/nickliqian/cnn_captcha/blob/master/gen_image/gen_sample_by_captcha.py) | ![py_Captcha](./readme_image/py_Captcha-1.jpg) |
 | Python | pycapt | [例子](https://github.com/aboutmydreams/pycapt) | ![pycapt](https://github.com/aboutmydreams/pycapt/raw/master/img/do4.png) |
@@ -159,11 +159,12 @@ pip install -r requirements.txt
 
 # 2 如何使用
 ## 2.1 数据集
-原始数据集可以存放在`./sample/origin`目录中。  
+原始数据集可以存放在`./sample/origin`目录中。
 为了便于处理，图片最好以`2e8j_17322d3d4226f0b5c5a71d797d2ba7f7.jpg`格式命名（标签_序列号.后缀）。 
-  
+
 如果你没有训练集，你可以使用`gen_sample_by_captcha.py`文件生成训练集文件。
 生成之前你需要修改相关配置`conf/captcha_config.json`（路径、文件后缀、字符集等）。
+
 ```
 {
   "root_dir": "sample/origin/",  # 验证码保存路径
@@ -245,12 +246,13 @@ python3 verify_and_split_data.py
 
 此外，当你有新的样本需要一起训练，可以放在`sample/new`目录下，再次运行`python3 verify_and_split_data.py`即可。  
 需要注意的是，如果新的样本中有新增的标签，你需要把新的标签增加到`char_set`配置中或者`labels.json`文件中。 
- 
+
 ## 2.4 训练模型
 创建好训练集和测试集之后，就可以开始训练模型了。  
 训练的过程中会输出日志，日志展示当前的训练轮数、准确率和loss。  
 **此时的准确率是训练集图片的准确率，代表训练集的图片识别情况**  
 例如：
+
 ```
 第10次训练 >>> 
 [训练集] 字符准确率为 0.03000 图片准确率为 0.00000 >>> loss 0.1698757857
@@ -264,6 +266,7 @@ python3 verify_and_split_data.py
 ```
 这里不具体介绍tensorflow安装相关问题，直奔主题。  
 确保图片相关参数和目录设置正确后，执行以下命令开始训练：
+
 ```
 python3 train_model.py
 ```
@@ -316,6 +319,7 @@ app.run(host='0.0.0.0',port=5000,debug=False)
 部署多个模型:
 在`webserver_recognize_api.py`文件汇总，新建一个Recognizer对象；  
 并参照原有`up_image`函数编写的路由和识别逻辑。
+
 ```
 Q = Recognizer(image_height, image_width, max_captcha, char_set, model_save_dir)
 ```
@@ -327,6 +331,7 @@ value = Q.rec_image(img)
 ## 2.10 在线识别
 在线识别验证码是显示中常用场景，即实时获取目标验证码来调用接口进行识别。  
 为了测试的完整性，这里搭建了一个验证码获取接口，通过执行下面的命令启动：  
+
 ```
 python webserver_captcha_image.py
 ```
@@ -343,6 +348,7 @@ python webserver_captcha_image.py
 - 计算引擎：GPU
 - GPU型号：笔记本，GTX 950X 2G显卡
   
+
 经过测试：
 5000次，25分钟，**训练集**字符准确率84%，图片准确率51%；  
 9190次，46分钟，**训练集**字符准确率100%，图片准确率100%；  
@@ -357,7 +363,7 @@ python webserver_captcha_image.py
 曲线图如下：  
 训练集-  
 ![train_acc](readme_image/train_acc.png) 
-   
+
 测试集-   
 ![test_acc](readme_image/test_acc.png)  
 

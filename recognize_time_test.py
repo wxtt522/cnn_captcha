@@ -36,7 +36,7 @@ def recognize_captcha(index, test_path, save_path, image_suffix):
     now_time = datetime.datetime.now().strftime('%Y-%m-%d@%H:%M:%S')  # 当前时间
 
     # 记录日志
-    log = "{},{},{},{},{},{}\n"\
+    log = "{},{},{},{},{},{}\n" \
         .format(index, predict_text, now_time, whole_time_for_work, speed_time_by_rec, request_time_by_rec)
     with open("./test.csv", "a+") as f:
         f.write(log)
@@ -66,5 +66,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-

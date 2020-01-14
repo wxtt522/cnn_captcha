@@ -93,7 +93,7 @@ def split(origin_dir, train_dir, test_dir, bad_imgs):
         os.mkdir(test_dir)
 
     # 测试集
-    test_count = int(total_count*0.05)
+    test_count = int(total_count * 0.05)
     test_set = set()
     for i in range(test_count):
         while True:

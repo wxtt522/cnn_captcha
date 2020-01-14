@@ -7,9 +7,14 @@ for i in range(10):
     t = R.rec_image(r_img)
 简单的图片每张基本上可以达到毫秒级的识别速度
 """
+import random
+import string
+
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from captcha.image import ImageCaptcha
+
 from cnnlib.network import CNN
 import json
 
@@ -69,9 +74,21 @@ def main():
     char_set = sample_conf["char_set"]
     model_save_dir = sample_conf["model_save_dir"]
     R = Recognizer(image_height, image_width, max_captcha, char_set, model_save_dir)
-    r_img = Image.open("./sample/test/2b3n_6915e26c67a52bc0e4e13d216eb62b37.jpg")
-    t = R.rec_image(r_img)
-    print(t)
+    total = 100
+    suc = 0
+    for i in range(total):
+        ic = ImageCaptcha(100, 60)
+        chas = ''.join(random.sample(string.digits + string.ascii_letters, 4))
+        print(chas, end=' ')
+        # r_img = Image.open("./sample/test/2b3n_6915e26c67a52bc0e4e13d216eb62b37.jpg")
+        img = ic.generate_image(chas)
+        t = R.rec_image(img)
+        print(t, end=' ')
+        if chas == t:
+            suc = suc + 1
+            print(' √ ', end='')
+        print()
+    print('suc={},ratio={}'.format(suc, suc / total))
 
 
 if __name__ == '__main__':

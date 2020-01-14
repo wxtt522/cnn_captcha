@@ -42,7 +42,6 @@ def main():
     characters = config["characters"]  # 图片上显示的字符集 # characters = "0123456789abcdefghijklmnopqrstuvwxyz"
     count = config["count"]  # 生成多少张样本
     char_count = config["char_count"]  # 图片上的字符数量
-
     # 设置图片高度和宽度
     width = config["width"]
     height = config["height"]
